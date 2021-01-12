@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.24.0
+    restart: unless-stopped
+    ports:
+      - target: 9090
+        published: 9090
+        protocol: tcp
+        mode: host
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.retention.time=30d
+      - --web.enable-lifecycle
+      - --web.enable-admin-api
+    volumes:
+      - type: volume
+        source: prometheus-volume
+        target: /prometheus
+      - type: bind
+        source: ./prometheus
+        target: /etc/prometheus
+        read_only: true
+    networks:
+      - monitoramento-network
+
+volumes:
+  prometheus-volume:
+    driver: local
+
+networks:
+  monitoramento-network:
+    driver: bridge

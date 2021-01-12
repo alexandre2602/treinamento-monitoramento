@@ -1,0 +1,21 @@
+global:
+  scrape_interval: 15s # --- Realiza o scrape à cada 15s.
+  scrape_timeout: 15s  # --- Tempo de espera máximo por uma resposta.
+  evaluation_interval: 30s # --- Releitura do arquivo de regras.
+
+# -- Configuração do AlertManager.
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - alertmanager:9093
+
+# --- Path do arquivo de alertas.
+rule_files:
+  - "/etc/prometheus/alert.yml"
+
+scrape_configs:
+  # --- Prometheus
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['prometheus:9090']

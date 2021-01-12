@@ -1,2 +1,3 @@
 # treinamento-monitoramento
-Arquivos utilizamos no treinmaneot sobre monitoramento.
+
+Arquivos utilizados no treinamento.
