@@ -1,0 +1,23 @@
+groups:
+- name: infra
+  rules:
+  # --- Target indisponível
+  - alert: InstanceDown
+    expr: up == 0
+    for: 3m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Target indisponível!"
+      description: "O target {{ $labels.instance }} - {{ $labels.job }} está indisponível há mais de um 3 minutos."
+
+  # --- Uso de CPU acima de 95%
+  - alert: CpuUsage
+    expr: 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 95
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Uso de CPU acima de 95%."
+      description: "O host {{ $labels.hostname }} está com {{ $value }}% de uso de CPU há mais de 5 minutos."
+

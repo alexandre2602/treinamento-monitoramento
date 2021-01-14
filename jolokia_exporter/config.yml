@@ -1,0 +1,209 @@
+metrics:
+- source:
+    mbean: java.lang:type=Memory
+    attribute: HeapMemoryUsage
+    path: used
+  target: java_memory_heap_memory_usage_used
+
+- source:
+    mbean: java.lang:type=Memory
+    attribute: HeapMemoryUsage
+    path: max
+  target: java_memory_max
+
+- source:
+    mbean: java.lang:type=Threading
+    attribute: ThreadCount
+  target: java_threading_thread_count
+
+- source:
+    mbean: java.lang:type=Runtime
+    attribute: Uptime
+  target: java_uptime
+
+- source:
+    mbean: java.lang:type=OperatingSystem
+  target: java_os
+
+# --- ArquivosDB
+- source:
+    mbean: jboss.jca:name=jdbc/ArquivosDB,service=ManagedConnectionPool
+    attribute: ConnectionCount
+  target: ds_unemat_arquivosdb_connectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/ArquivosDB,service=ManagedConnectionPool
+    attribute: InUseConnectionCount
+  target: ds_unemat_arquivosdb_inuseconnectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/ArquivosDB,service=ManagedConnectionPool
+    attribute: MaxSize
+  target: ds_unemat_arquivosdb_maxsize
+
+- source:
+    mbean: jboss.jca:name=jdbc/ArquivosDB,service=ManagedConnectionPool
+    attribute: MinSize
+  target: ds_unemat_arquivosdb_minsize
+
+# --- ArquivosNode1
+- source:
+    mbean: jboss.jca:name=jdbc/ArquivosNode1,service=ManagedConnectionPool
+    attribute: ConnectionCount
+  target: ds_unemat_arquivosnode1_connectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/ArquivosNode1,service=ManagedConnectionPool
+    attribute: InUseConnectionCount
+  target: ds_unemat_arquivosnode1_inuseconnectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/ArquivosNode1,service=ManagedConnectionPool
+    attribute: MaxSize
+  target: ds_unemat_arquivosnode1_maxsize
+
+- source:
+    mbean: jboss.jca:name=jdbc/ArquivosNode1,service=ManagedConnectionPool
+    attribute: MinSize
+  target: ds_unemat_arquivosnode1_minsize
+
+# --- ComumDB
+- source:
+    mbean: jboss.jca:name=jdbc/ComumDB,service=ManagedConnectionPool
+    attribute: ConnectionCount
+  target: ds_unemat_comumdb_connectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/ComumDB,service=ManagedConnectionPool
+    attribute: InUseConnectionCount
+  target: ds_unemat_comumdb_inuseconnectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/ComumDB,service=ManagedConnectionPool
+    attribute: MaxSize
+  target: ds_unemat_comumdb_maxsize
+
+- source:
+    mbean: jboss.jca:name=jdbc/ComumDB,service=ManagedConnectionPool
+    attribute: MinSize
+  target: ds_unemat_comumdb_minsize
+
+# --- LogOperacaoDB
+- source:
+    mbean: jboss.jca:name=jdbc/LogOperacaoDB,service=ManagedConnectionPool
+    attribute: ConnectionCount
+  target: ds_unemat_logoperacaodb_connectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/LogOperacaoDB,service=ManagedConnectionPool
+    attribute: InUseConnectionCount
+  target: ds_unemat_logoperacaodb_inuseconnectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/LogOperacaoDB,service=ManagedConnectionPool
+    attribute: MaxSize
+  target: ds_unemat_logoperacaodb_maxsize
+
+- source:
+    mbean: jboss.jca:name=jdbc/LogOperacaoDB,service=ManagedConnectionPool
+    attribute: MinSize
+  target: ds_unemat_logoperacaodb_minsize
+
+# --- SIGAADB
+- source:
+    mbean: jboss.jca:name=jdbc/SIGAADB,service=ManagedConnectionPool
+    attribute: ConnectionCount
+  target: ds_unemat_sigaadb_connectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/SIGAADB,service=ManagedConnectionPool
+    attribute: InUseConnectionCount
+  target: ds_unemat_sigaadb_inuseconnectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/SIGAADB,service=ManagedConnectionPool
+    attribute: MaxSize
+  target: ds_unemat_sigaadb_maxsize
+
+- source:
+    mbean: jboss.jca:name=jdbc/SIGAADB,service=ManagedConnectionPool
+    attribute: MinSize
+  target: ds_unemat_sigaadb_minsize
+
+# --- SIGPPDB
+- source:
+    mbean: jboss.jca:name=jdbc/SIGPPDB,service=ManagedConnectionPool
+    attribute: ConnectionCount
+  target: ds_unemat_sigppdb_connectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/SIGPPDB,service=ManagedConnectionPool
+    attribute: InUseConnectionCount
+  target: ds_unemat_sigppdb_inuseconnectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/SIGPPDB,service=ManagedConnectionPool
+    attribute: MaxSize
+  target: ds_unemat_sigppdb_maxsize
+
+- source:
+    mbean: jboss.jca:name=jdbc/SIGPPDB,service=ManagedConnectionPool
+    attribute: MinSize
+  target: ds_unemat_sigppdb_minsize
+
+# ---- SIGRHDB
+- source:
+    mbean: jboss.jca:name=jdbc/SIGRHDB,service=ManagedConnectionPool
+    attribute: ConnectionCount
+  target: ds_unemat_sigrhdb_connectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/SIGRHDB,service=ManagedConnectionPool
+    attribute: InUseConnectionCount
+  target: ds_unemat_sigrhdb_inuseconnectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/SIGRHDB,service=ManagedConnectionPool
+    attribute: MaxSize
+  target: ds_unemat_sigrhdb_maxsize
+
+- source:
+    mbean: jboss.jca:name=jdbc/SIGRHDB,service=ManagedConnectionPool
+    attribute: MinSize
+  target: ds_unemat_sigrhdb_minsize
+
+# --- SIPACDB
+- source:
+    mbean: jboss.jca:name=jdbc/SIPACDB,service=ManagedConnectionPool
+    attribute: ConnectionCount
+  target: ds_unemat_sipacdb_connectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/SIPACDB,service=ManagedConnectionPool
+    attribute: InUseConnectionCount
+  target: ds_unemat_sipacdb_inuseconnectioncount
+
+- source:
+    mbean: jboss.jca:name=jdbc/SIPACDB,service=ManagedConnectionPool
+    attribute: MaxSize
+  target: ds_unemat_sipacdb_maxsize
+
+- source:
+    mbean: jboss.jca:name=jdbc/SIPACDB,service=ManagedConnectionPool
+    attribute: MinSize
+  target: ds_unemat_sipacdb_minsize
+
+# ajp
+- source:
+    mbean: jboss.web:name=ajp-0.0.0.0-8009,type=ThreadPool
+    attribute: currentThreadCount
+  target: conn_unemat_inst_ajp_connection
+
+- source:
+    mbean: jboss.web:name=ajp-0.0.0.0-8009,type=ThreadPool
+    attribute: currentThreadsBusy
+  target: conn_unemat_inst_ajp_connection_busy
+
+- source:
+    mbean: jboss.web:name=ajp-0.0.0.0-8009,type=GlobalRequestProcessor
+  target: global_request_count

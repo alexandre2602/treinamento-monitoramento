@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # --- Prometheus
   prometheus:
     container_name: prometheus
     image: prom/prometheus:v2.24.0
@@ -26,8 +27,59 @@ services:
     networks:
       - monitoramento-network
 
+   # --- AlertManager
+  alertmanager:
+    container_name: alertmanager
+    image: prom/alertmanager:v0.21.0
+    restart: unless-stopped
+    command:
+      - --config.file=/etc/alertmanager/alertmanager.yml
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: volume
+        source: alertmanager-volume
+        target: /alertmanager
+      - type: bind
+        source: ./alertmanager
+        target: /etc/alertmanager
+        read_only: true
+    networks:
+      - monitoramento-network
+
+  # --- Discord Integration Webhook
+  discord:
+    container_name: discord-integration
+    image: benjojo/alertmanager-discord:latest
+    restart: unless-stopped
+    environment:
+      DISCORD_WEBHOOK: 'https://discord.com/api/webhooks/799351728839327748/6bC8-n7qgTXAEje7QnfngBHfVFazVWS0kojv95LXx3yKaH67D9NlQAZDD8U4M0cV555I'
+    networks:
+      - monitoramento-network
+
+  # --- Jolokia Exporter
+  jolokia_exporter_testes:
+    container_name: jolokia_exporter_testes
+    image: scalify/jolokia_exporter:1.2.1
+    restart: unless-stopped
+    command: [
+      "export", "/config.yml", "https://testes-unemat.esig.com.br/jolokia", "insecure"
+    ]
+    volumes:
+      - type: bind
+        source: ./jolokia_exporter/config.yml
+        target: /config.yml
+        read_only: true
+    networks:
+      - monitoramento-network
+
 volumes:
   prometheus-volume:
+    driver: local
+  alertmanager-volume:
     driver: local
 
 networks:
