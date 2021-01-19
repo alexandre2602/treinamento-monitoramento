@@ -25,3 +25,10 @@
 - Introdução do Jolokia Exporter.
   - O que é e como funciona o Jolokia Exporter; https://github.com/Scalify/jolokia_exporter
   - Configuração do Jolokia Exporter;
+
+**Aula 03 - 19/01/2021.**
+
+- Introdução ao Grafana;
+  - O que é e como funciona o Grafana; https://grafana.com/oss/grafana/
+  - Configuração do Grafana;
+  - Criação dos Dashboards;
