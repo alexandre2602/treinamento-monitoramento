@@ -24,13 +24,13 @@ scrape_configs:
     static_configs:
     - targets: ['alertmanager:9093']
 
-  - job_name: 'monitoramento'
+  - job_name: 'unemat.esig.com.br'
     static_configs:
-    - targets: ['10.10.10.10:9100']
+    - targets: ['unemat.esig.com.br:9100']
       labels:
         application: 'sigufrn'
         environment: 'testes'
-        hostname: 'monitoramento'
+        hostname: 'unemat.esig.com.br'
 
   - job_name: 'jolokia_exporter_testes'
     scrape_interval: 30s

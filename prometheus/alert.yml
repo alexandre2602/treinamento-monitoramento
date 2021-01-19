@@ -20,4 +20,3 @@ groups:
     annotations:
       summary: "Uso de CPU acima de 95%."
       description: "O host {{ $labels.hostname }} está com {{ $value }}% de uso de CPU há mais de 5 minutos."
-

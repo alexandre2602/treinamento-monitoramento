@@ -14,5 +14,4 @@ route:
 receivers:
 - name: 'infra'
   webhook_configs:
-    send_resolved: true
-  - url: 'http://discord:9094'
+    - url: 'http://discord:9094'

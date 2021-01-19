@@ -29,6 +29,7 @@ Vagrant.configure("2") do |config|
         end
   
         cfg.vm.provision "shell", inline: <<-SHELL
+          yum clean all && yum update -y
           hostnamectl
         SHELL
       end

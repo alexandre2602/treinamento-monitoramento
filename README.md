@@ -32,3 +32,16 @@
   - O que é e como funciona o Grafana; https://grafana.com/oss/grafana/
   - Configuração do Grafana;
   - Criação dos Dashboards;
+
+
+**Missão:**
+
+- Node Exporter:
+  - Preproducao
+  - Treinamento
+  - Customizacao
+
+- Jolokia Exporter:
+  - Preproducao
+  - Treinamento
+  - Customizacao
