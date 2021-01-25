@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # --- Prometheus
+  # --- https://hub.docker.com/r/prom/prometheus/
   prometheus:
     container_name: prometheus
     image: prom/prometheus:v2.24.0
@@ -27,7 +27,7 @@ services:
     networks:
       - monitoramento-network
 
-   # --- AlertManager
+   # --- https://hub.docker.com/r/prom/alertmanager
   alertmanager:
     container_name: alertmanager
     image: prom/alertmanager:v0.21.0
@@ -52,6 +52,7 @@ services:
     networks:
       - monitoramento-network
   
+  # --- https://hub.docker.com/r/grafana/grafana
   grafana:
     container_name: grafana
     image: grafana/grafana:6.7.5-ubuntu
@@ -76,7 +77,7 @@ services:
     networks:
       - monitoramento-network
 
-  # --- Discord Integration Webhook
+  # --- https://hub.docker.com/r/benjojo/alertmanager-discord
   discord:
     container_name: discord-integration
     image: benjojo/alertmanager-discord:latest
@@ -88,7 +89,7 @@ services:
     networks:
       - monitoramento-network
 
-  # --- Jolokia Exporter
+  # --- https://hub.docker.com/r/scalify/jolokia_exporter
   jolokia_exporter_testes:
     container_name: jolokia_exporter_testes
     image: scalify/jolokia_exporter:1.2.1
