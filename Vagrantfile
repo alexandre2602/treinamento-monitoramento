@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 servers = {
-  'monitoramento' => { 'ip' => '10.10.10.10', 'memory' => '4096', 'cpus' => '2', 'disk' => '/tmp/monitoramento.vdi' }
+  'monitoring' => { 'ip' => '10.10.10.10', 'memory' => '4096', 'cpus' => '2', 'disk' => '/tmp/monitoring.vdi' }
 }
 
 Vagrant.configure("2") do |config|
@@ -29,9 +29,16 @@ Vagrant.configure("2") do |config|
         end
   
         cfg.vm.provision "shell", inline: <<-SHELL
-          yum clean all && yum update -y
-          hostnamectl
+          setenforce 0
+          yum clean all && yum install ansible -y
+          export ANSIBLE_CONFIG="/vagrant/ansible/ansible.cfg"
+          ansible-galaxy collection install --collections-path /vagrant/ansible/collections community.general
+          ansible-galaxy collection install --collections-path /vagrant/ansible/collections ansible.posix
         SHELL
+
+        cfg.vm.provision 'ansible_local' do |ansible|
+          ansible.playbook = "./ansible/playbook.yml"
+        end
       end
     end
 end

@@ -1,0 +1,108 @@
+---
+- name: Playbook utilizada para configuração de uma VM de estudos com Docker e Docker Compose.
+  gather_facts: false
+  become: yes
+  hosts: all
+  tasks:
+
+    # --- https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yum_module.html
+    - name: Atualizando pacotes. Isso irá demorar alguns minutos...
+      ansible.builtin.yum:
+        name: '*'
+        state: latest
+        update_cache: yes
+
+    # --- https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yum_repository_module.html
+    - name: Adicionando o repositório Docker CE Stable.
+      ansible.builtin.yum_repository:
+        name: docker-ce-stable
+        description: 'Docker CE Stable - $basearch'
+        file: external_repos
+        baseurl: 'https://download.docker.com/linux/centos/$releasever/$basearch/stable'
+        gpgkey: 'https://download.docker.com/linux/centos/gpg'
+        gpgcheck: yes
+        enabled: yes
+      notify: yum-clean-metadata
+
+    # --- https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yum_module.html
+    - name: Instalando o Docker.
+      ansible.builtin.yum:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+        update_cache: yes
+    
+    # --- https://docs.ansible.com/ansible/latest/collections/ansible/builtin/user_module.html
+    - name: Adicionando o usuário 'vagrant' no grupo secundário 'docker'.
+      ansible.builtin.user:
+        name: vagrant
+        groups: docker
+        append: yes
+
+    # --- https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_module.html
+    - name: Inicializando o serviço docker.service.
+      ansible.builtin.systemd:
+        name: docker.service
+        state: started
+        enabled: yes
+
+    # --- https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html
+    - name: Instalando o Docker Compose.
+      ansible.builtin.get_url:
+        url: 'https://github.com/docker/compose/releases/download/1.27.4/docker-compose-Linux-x86_64'
+        dest: /usr/bin/docker-compose
+        checksum: 'sha256:04216d65ce0cd3c27223eab035abfeb20a8bef20259398e3b9d9aa8de633286d'
+        owner: root
+        group: root
+        mode: '0755'
+
+    # --- https://docs.ansible.com/ansible/latest/collections/community/general/parted_module.html
+    - name: Particionando um disco secundário do tipo LVM.
+      community.general.parted:
+        device: /dev/sdb
+        number: 1
+        fs_type: 
+        flags: [ lvm ]
+        state: present
+
+    # --- https://docs.ansible.com/ansible/latest/collections/community/general/lvg_module.html
+    - name: Configurando um Volume Group (VG).
+      community.general.lvg:
+        vg: vg00
+        pvs: /dev/sdb1
+        pesize: 32
+        state: present
+
+    # --- https://docs.ansible.com/ansible/latest/collections/community/general/lvol_module.html
+    - name: Configurando um Logical Volume (LV).
+      community.general.lvol:
+        vg: vg00
+        lv: lv00
+        size: 100%FREE
+        active: yes
+        state: present
+
+    # --- https://docs.ansible.com/ansible/latest/collections/community/general/filesystem_module.html
+    - name: Formatando disco secundário com tipo XFS.
+      community.general.filesystem:
+        dev: /dev/mapper/vg00-lv00
+        fstype: xfs
+        state: present
+
+    # --- https://docs.ansible.com/ansible/latest/collections/ansible/posix/mount_module.html
+    - name: Montando o disco secundário no /dados.
+      ansible.posix.mount:
+        path: /dados
+        src: /dev/mapper/vg00-lv00
+        fstype: xfs
+        opts: defaults,noatime
+        state: mounted
+
+  handlers:
+    # --- https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html
+    - name: yum-clean-metadata
+      command: yum clean metadata
+      args:
+        warn: false
